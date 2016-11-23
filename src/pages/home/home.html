@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      AbranchesDev
+    </ion-title>
+  </ion-navbar>
+
+  <ion-searchbar
+   [(ngModel)]="searchKeyword"
+   (keyup.enter)="search(searchKeyword, $event)"
+   [showCancelButton]="shouldShowCancel"
+   (ionInput)="onCencel($event)">
+  </ion-searchbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+     pullicon="arrow-dropdown"
+     pullingtext="Pull to refresh"
+     refreshingSpinner="cirles"
+     refreshingText="Atualizando.."
+   ></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card *ngFor="let data of datas">
+
+    <ion-item *ngFor="let author of data._embedded.author">
+      <ion-avatar item-left>
+        <img src="{{author.avatar_urls['24']}}"/>
+      </ion-avatar>
+      <h2>{{author.name}}</h2>
+      <p>{{data.date | date:'dd/MM/yyyy'}}</p>
+    </ion-item>
+
+    <div *ngFor="let thumbnail of data._embedded['wp:featuredmedia']">
+      <img
+       src="{{thumbnail.media_details.sizes.full.source_url}}"
+       *ngIf="thumbnail.source_url"/>
+    </div>
+
+    <ion-card-content>
+      <ion-card-title>{{data.title.rendered}}</ion-card-title>
+      <div [innerHTML]="data.excerpt.rendered">
+        {{data.excerpt.rendered}}
+      </div>
+    </ion-card-content>
+
+    <div class="div">
+      <button class="button" full primary padding (click)="openSinglePage(data._links.self[0].href)" >Veja mais</button>
+    </div>
+
+
+  </ion-card>
+
+  <ion-infinite-scroll (ionInfinite)="infiniteScroll($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

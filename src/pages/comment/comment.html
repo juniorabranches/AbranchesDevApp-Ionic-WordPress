@@ -1,0 +1,64 @@
+<!--
+  Generated template for the CommentPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Comentar</ion-title>
+    <ion-buttons start>
+
+        <button padding (click)="dismiss()">
+          <span light showWhen="ios">Cancelar</span>
+          <ion-icon name="md-close" showWhen="android"></ion-icon>
+        </button>
+
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <form #f="ngForm">
+    <ion-item>
+      <ion-label floating>Nome</ion-label>
+      <ion-input
+        [(ngModel)]="author_name"
+        name="author_name"
+        type="text"
+        required
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input
+        [(ngModel)]="author_email"
+        name="author_email"
+        type="text"
+        required
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Texto</ion-label>
+      <ion-textarea
+        [(ngModel)]="content"
+        name="content"
+        required
+      ></ion-textarea>
+    </ion-item>
+    <div class="div">
+      <button class="button"
+        type="submit"
+        full
+        [disabled]="f.valid === false"
+        (click)="doComment(f.value,$event)"
+        padding
+      >Postar comentário</button>
+    </div>
+  </form>
+
+</ion-content>
